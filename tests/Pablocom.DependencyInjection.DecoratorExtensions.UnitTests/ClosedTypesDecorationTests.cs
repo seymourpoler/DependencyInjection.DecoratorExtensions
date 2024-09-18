@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Pablocom.DependencyInjection.DecoratorExtensions.UnitTests;
 
-public sealed class ClosedTypesDecorationTests
+public sealed class ClosedTypesDecorationTests : DecorationTestBase
 {
     [Fact]
     public void CanDecorateType()
@@ -176,15 +176,6 @@ public sealed class ClosedTypesDecorationTests
             var decorator = (Decorator) instance;
             decorator.InnerDecoratedService.Should().BeOfType<Decorated>();
         }
-    }
-
-    private static ServiceProvider ConfigureServices(Action<IServiceCollection> configurationDelegate)
-    {
-        var services = new ServiceCollection();
-        
-        configurationDelegate.Invoke(services);
-        
-        return services.BuildServiceProvider();
     }
 
     public interface IDecoratedService
