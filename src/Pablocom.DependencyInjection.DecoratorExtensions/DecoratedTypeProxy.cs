@@ -4,12 +4,15 @@ using System.Runtime.InteropServices;
 
 namespace Pablocom.DependencyInjection.DecoratorExtensions;
 
-public class DecoratedTypeProxy : Type
+internal sealed class DecoratedTypeProxy : Type
 {
     private readonly Type _proxiedType;
     
-    public DecoratedTypeProxy(Type type) => _proxiedType = type;
-    
+    public DecoratedTypeProxy(Type type)
+    {
+        _proxiedType = type;
+    }
+
     public override bool Equals(Type? o) => ReferenceEquals(this, o);
     public override bool Equals(object? o) => ReferenceEquals(this, o);
     
