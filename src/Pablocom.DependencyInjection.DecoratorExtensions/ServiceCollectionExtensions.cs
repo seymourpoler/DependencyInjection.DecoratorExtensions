@@ -89,7 +89,7 @@ public static class ServiceCollectionExtensions
 
     private static bool TryDecorate(this IServiceCollection services, DecorationStrategy decorationStrategy)
     {
-        var isDecorated = false;
+        var hasDecoratedAnyService = false;
         
         for (var i = services.Count - 1; i >= 0; i--)
         {
@@ -107,9 +107,9 @@ public static class ServiceCollectionExtensions
             services[i] = serviceDescriptor.WithImplementationFactory(
                 decorationStrategy.CreateImplementationFactory(decoratedTypeProxy));
             
-            isDecorated = true;
+            hasDecoratedAnyService = true;
         }
         
-        return isDecorated;
+        return hasDecoratedAnyService;
     }
 }

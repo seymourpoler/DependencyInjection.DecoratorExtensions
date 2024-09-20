@@ -6,12 +6,20 @@ internal sealed class ClosedTypeDecorationStrategy : DecorationStrategy
 {
     private readonly Type _decoratorType;
 
-    public ClosedTypeDecorationStrategy(Type typeToDecorate, Type decoratorType) : base(typeToDecorate)
+    public ClosedTypeDecorationStrategy(Type decoratedType, Type decoratorType) : base(decoratedType)
     {
+        if (decoratedType.IsGenericTypeDefinition)
+            throw new ArgumentException(
+                "Cannot create closed type decoration strategy if any of the types is open generic", nameof(decoratedType)); 
+        
+        if (decoratorType.IsGenericTypeDefinition)
+            throw new ArgumentException(
+                "Cannot create closed type decoration strategy if any of the types is open generic", nameof(decoratorType));
+        
         _decoratorType = decoratorType;
     }
 
-    public override bool CanDecorate(Type type) => type == TypeToDecorate;
+    public override bool CanDecorate(Type type) => type == TargetDecoratedType;
 
     public override Func<IServiceProvider, object> CreateImplementationFactory(DecoratedTypeProxy decoratedType)
     {

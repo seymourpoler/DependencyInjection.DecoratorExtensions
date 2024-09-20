@@ -7,12 +7,12 @@ internal class ImplementationFactoryDecorationStrategy : DecorationStrategy
 {
     private readonly Func<object, IServiceProvider, object> _decoratorFactory;
 
-    public ImplementationFactoryDecorationStrategy(Type typeToDecorate, Func<object, IServiceProvider, object> decoratorFactory) : base(typeToDecorate)
+    public ImplementationFactoryDecorationStrategy(Type decoratedType, Func<object, IServiceProvider, object> decoratorFactory) : base(decoratedType)
     {
         _decoratorFactory = decoratorFactory;
     }
 
-    public override bool CanDecorate(Type type) => type == TypeToDecorate;
+    public override bool CanDecorate(Type type) => type == TargetDecoratedType;
 
     public override Func<IServiceProvider, object> CreateImplementationFactory(DecoratedTypeProxy decoratedType)
     {

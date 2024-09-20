@@ -6,15 +6,23 @@ internal sealed class OpenGenericTypeDecorationStrategy : DecorationStrategy
 {
     private readonly Type _decoratorType;
 
-    public OpenGenericTypeDecorationStrategy(Type typeToDecorate, Type decoratorType) : base(typeToDecorate)
+    public OpenGenericTypeDecorationStrategy(Type decoratedType, Type decoratorType) : base(decoratedType)
     {
+        if (!decoratedType.IsGenericTypeDefinition)
+            throw new ArgumentException(
+                "Cannot create open generic decoration strategy if any of the types is not open generic", nameof(decoratedType));
+        
+        if (!decoratorType.IsGenericTypeDefinition)
+            throw new ArgumentException(
+                "Cannot create open generic decoration strategy if any of the types is not open generic", nameof(decoratorType));
+        
         _decoratorType = decoratorType;
     }
 
     public override bool CanDecorate(Type type)
     {
         return type is { IsGenericType: true, IsGenericTypeDefinition: false }
-               && type.GetGenericTypeDefinition() == TypeToDecorate.GetGenericTypeDefinition()
+               && type.GetGenericTypeDefinition() == TargetDecoratedType.GetGenericTypeDefinition()
                && GenericArgumentsAreCompatible(type, _decoratorType);
     }
 

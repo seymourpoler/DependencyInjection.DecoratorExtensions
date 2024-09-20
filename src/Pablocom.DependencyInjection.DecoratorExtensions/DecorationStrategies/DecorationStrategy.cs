@@ -2,11 +2,11 @@ namespace Pablocom.DependencyInjection.DecoratorExtensions.DecorationStrategies;
 
 internal abstract class DecorationStrategy
 {
-    protected Type TypeToDecorate { get; }
+    protected Type TargetDecoratedType { get; }
 
-    protected DecorationStrategy(Type typeToDecorate)
+    protected DecorationStrategy(Type decoratedType)
     {
-        TypeToDecorate = typeToDecorate;
+        TargetDecoratedType = decoratedType;
     }
     
     public abstract bool CanDecorate(Type type);
