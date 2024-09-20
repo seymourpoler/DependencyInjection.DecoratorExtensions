@@ -39,12 +39,12 @@ public sealed class WhenDecoratingServices
         });
 
         var resolvedService = serviceProvider.GetRequiredService<IDecoratedService>();
-        
         resolvedService.Execute();
         
         resolvedService.Should().BeOfType<Decorator>();
         
         var decorator = (Decorator) resolvedService;
+        
         decorator.InnerDecoratedService.Should().BeOfType<Decorated>();
         
         var decorated = (Decorated) decorator.InnerDecoratedService;
@@ -64,7 +64,6 @@ public sealed class WhenDecoratingServices
         });
 
         var resolvedService = serviceProvider.GetRequiredService<IDecoratedService>();
-        
         resolvedService.Execute();
         
         resolvedService.Should().BeOfType<Decorator>();
@@ -72,9 +71,11 @@ public sealed class WhenDecoratingServices
         var outerDecorator = (Decorator)resolvedService;
         
         outerDecorator.InnerDecoratedService.Should().BeOfType<Decorator>();
+        
         var innerDecorator = (Decorator)outerDecorator.InnerDecoratedService;
         
         innerDecorator.InnerDecoratedService.Should().BeOfType<Decorated>();
+        
         var decorated = (Decorated)innerDecorator.InnerDecoratedService;
         
         outerDecorator.ReceivedCallsCount.Should().Be(1);

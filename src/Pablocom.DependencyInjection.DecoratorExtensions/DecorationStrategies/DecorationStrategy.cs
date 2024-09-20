@@ -2,7 +2,7 @@ namespace Pablocom.DependencyInjection.DecoratorExtensions.DecorationStrategies;
 
 internal abstract class DecorationStrategy
 {
-    protected Type TargetDecoratedType { get; }
+    public Type TargetDecoratedType { get; }
 
     protected DecorationStrategy(Type decoratedType)
     {

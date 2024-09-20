@@ -7,13 +7,11 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection Decorate<TDecorated, TDecorator>(this IServiceCollection services) 
         where TDecorator : TDecorated
+        where TDecorated : notnull
     {
         var strategy = new ClosedTypeDecorationStrategy(typeof(TDecorated), typeof(TDecorator));
         
-        if (!services.TryDecorate(strategy)) 
-            throw new DecorationException(typeof(TDecorated));
-        
-        return services;
+        return services.Decorate(strategy);
     }
     
     public static IServiceCollection Decorate(this IServiceCollection services, Type decorated, Type decorator)
@@ -21,31 +19,23 @@ public static class ServiceCollectionExtensions
         DecorationStrategy strategy = decorated.IsGenericTypeDefinition
             ? new OpenGenericTypeDecorationStrategy(decorated, decorator)
             : new ClosedTypeDecorationStrategy(decorated, decorator);
-
-        if (!services.TryDecorate(strategy)) 
-            throw new DecorationException(decorated);
         
-        return services;
+        return services.Decorate(strategy);
     }
 
-    public static IServiceCollection Decorate<TDecorated, TDecorator>(this IServiceCollection services, 
-        Func<TDecorated, IServiceProvider, TDecorator> decoratorFactory) 
+    public static IServiceCollection Decorate<TDecorated, TDecorator>(this IServiceCollection services, Func<TDecorated, IServiceProvider, TDecorator> decoratorFactory) 
         where TDecorator : TDecorated
         where TDecorated : notnull
     {
         var strategy = new ImplementationFactoryDecorationStrategy(
             typeof(TDecorated), 
-            (decoratedInstance, provider) => decoratorFactory((TDecorated) decoratedInstance, provider)
+            (decoratedInstance, provider) => decoratorFactory((TDecorated)decoratedInstance, provider)
         );
         
-        if (!services.TryDecorate(strategy)) 
-            throw new DecorationException(typeof(TDecorated));
-        
-        return services;
+        return services.Decorate(strategy);
     }
     
-    public static IServiceCollection Decorate<TDecorated, TDecorator>(this IServiceCollection services, 
-        Func<TDecorated, TDecorator> decoratorFactory) 
+    public static IServiceCollection Decorate<TDecorated, TDecorator>(this IServiceCollection services, Func<TDecorated, TDecorator> decoratorFactory) 
         where TDecorator : TDecorated
         where TDecorated : notnull
     {
@@ -54,40 +44,29 @@ public static class ServiceCollectionExtensions
             (decoratedInstance, _) => decoratorFactory((TDecorated) decoratedInstance)
         );
         
-        if (!services.TryDecorate(strategy)) 
-            throw new DecorationException(typeof(TDecorated));
-        
-        return services;
+        return services.Decorate(strategy);
     }
     
-    public static IServiceCollection Decorate<TDecorated>(this IServiceCollection services, 
-        Func<object, IServiceProvider, object> decoratorFactory) 
-        where TDecorated : class
+    public static IServiceCollection Decorate<TDecorated>(this IServiceCollection services, Func<object, IServiceProvider, object> decoratorFactory) 
+        where TDecorated : notnull
     {
         var strategy = new ImplementationFactoryDecorationStrategy(typeof(TDecorated), decoratorFactory);
         
-        if (!services.TryDecorate(strategy)) 
-            throw new DecorationException(typeof(TDecorated));
-        
-        return services;
+        return services.Decorate(strategy);
     }
     
-    public static IServiceCollection Decorate<TDecorated>(this IServiceCollection services, 
-        Func<TDecorated, IServiceProvider, object> decoratorFactory) 
-        where TDecorated : class
+    public static IServiceCollection Decorate<TDecorated>(this IServiceCollection services, Func<TDecorated, IServiceProvider, object> decoratorFactory) 
+        where TDecorated : notnull
     {
         var strategy = new ImplementationFactoryDecorationStrategy(
             typeof(TDecorated), 
-            (decoratedInstance, provider) => decoratorFactory((TDecorated) decoratedInstance, provider)
+            (decoratedInstance, provider) => decoratorFactory((TDecorated)decoratedInstance, provider)
         );
-
-        if (!services.TryDecorate(strategy)) 
-            throw new DecorationException(typeof(TDecorated));
         
-        return services;
+        return services.Decorate(strategy);
     }
 
-    private static bool TryDecorate(this IServiceCollection services, DecorationStrategy decorationStrategy)
+    private static IServiceCollection Decorate(this IServiceCollection services, DecorationStrategy decorationStrategy)
     {
         var hasDecoratedAnyService = false;
         
@@ -106,10 +85,13 @@ public static class ServiceCollectionExtensions
             services.Add(serviceDescriptor.WithServiceType(decoratedTypeProxy));
             services[i] = serviceDescriptor.WithImplementationFactory(
                 decorationStrategy.CreateImplementationFactory(decoratedTypeProxy));
-            
+
             hasDecoratedAnyService = true;
         }
+
+        if (!hasDecoratedAnyService)
+            throw new DecorationException(decorationStrategy.TargetDecoratedType);
         
-        return hasDecoratedAnyService;
+        return services;
     }
 }
