@@ -159,6 +159,7 @@ public sealed class ClosedTypesDecorationTests : DecorationTestBase
             services => services.Decorate<IDecoratedService, Decorator>((decorated, _) => new Decorator(decorated)),
             services => services.Decorate<IDecoratedService>((decorated, _) => new Decorator(decorated)),
             services => services.Decorate((IDecoratedService decorated, IServiceProvider _) => new Decorator(decorated)),
+            services => services.Decorate<IDecoratedService>((decorated, _) => new Decorator((IDecoratedService)decorated)),
             services => services.Decorate((IDecoratedService decorated) => new Decorator(decorated))
         };
 
@@ -178,6 +179,16 @@ public sealed class ClosedTypesDecorationTests : DecorationTestBase
         }
     }
 
+    [Fact]
+    public void ThrowsExceptionIfCannotFindServiceToDecorate()
+    {
+        var services = new ServiceCollection();
+
+        var act = () => services.Decorate<IDecoratedService, Decorator>();
+        
+        act.Should().Throw<InvalidOperationException>();
+    }
+    
     public interface IDecoratedService
     {
         void Execute();

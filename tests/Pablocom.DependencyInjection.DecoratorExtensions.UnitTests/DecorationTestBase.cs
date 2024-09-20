@@ -4,11 +4,11 @@ namespace Pablocom.DependencyInjection.DecoratorExtensions.UnitTests;
 
 public abstract class DecorationTestBase
 {
-    protected static ServiceProvider ConfigureServices(Action<IServiceCollection> configurationDelegate)
+    protected static ServiceProvider ConfigureServices(Action<IServiceCollection> configure)
     {
         var services = new ServiceCollection();
         
-        configurationDelegate.Invoke(services);
+        configure.Invoke(services);
         
         return services.BuildServiceProvider();
     }

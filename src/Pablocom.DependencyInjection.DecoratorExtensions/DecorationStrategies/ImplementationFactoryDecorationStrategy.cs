@@ -1,6 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Pablocom.DependencyInjection.DecoratorExtensions;
+namespace Pablocom.DependencyInjection.DecoratorExtensions.DecorationStrategies;
 
 internal class ImplementationFactoryDecorationStrategy : DecorationStrategy
     
