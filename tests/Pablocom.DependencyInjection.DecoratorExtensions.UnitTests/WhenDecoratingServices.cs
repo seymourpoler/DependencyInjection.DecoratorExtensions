@@ -149,7 +149,7 @@ public sealed class WhenDecoratingServices
             services => services.Decorate<IDecoratedService>((decorated, _) => new Decorator(decorated)),
             services => services.Decorate((IDecoratedService decorated, IServiceProvider _) => new Decorator(decorated)),
             services => services.Decorate<IDecoratedService>((decorated, _) => new Decorator((IDecoratedService)decorated)),
-            services => services.Decorate((IDecoratedService decorated) => new Decorator(decorated))
+            services => services.Decorate((IDecoratedService decorated) => new Decorator(decorated)),
         };
 
         foreach (var decorationOverload in allDecorationOverloads)

@@ -47,21 +47,10 @@ public static class ServiceCollectionExtensions
         return services.Decorate(strategy);
     }
     
-    public static IServiceCollection Decorate<TDecorated>(this IServiceCollection services, Func<object, IServiceProvider, object> decoratorFactory) 
+    public static IServiceCollection Decorate<TDecorated>(this IServiceCollection services, Func<TDecorated, IServiceProvider, TDecorated> decoratorFactory) 
         where TDecorated : notnull
     {
-        var strategy = new ImplementationFactoryDecorationStrategy(typeof(TDecorated), decoratorFactory);
-        
-        return services.Decorate(strategy);
-    }
-    
-    public static IServiceCollection Decorate<TDecorated>(this IServiceCollection services, Func<TDecorated, IServiceProvider, object> decoratorFactory) 
-        where TDecorated : notnull
-    {
-        var strategy = new ImplementationFactoryDecorationStrategy(
-            typeof(TDecorated), 
-            (decoratedInstance, provider) => decoratorFactory((TDecorated)decoratedInstance, provider)
-        );
+        var strategy = new ImplementationFactoryDecorationStrategy(typeof(TDecorated), (decoratedInstance, serviceProvider) => decoratorFactory((TDecorated)decoratedInstance, serviceProvider));
         
         return services.Decorate(strategy);
     }

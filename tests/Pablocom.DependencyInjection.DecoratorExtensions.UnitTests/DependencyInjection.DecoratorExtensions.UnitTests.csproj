@@ -24,11 +24,11 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Using Include="Xunit"/>
+        <Using Include="Xunit" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\src\Pablocom.DependencyInjection.DecoratorExtensions\Pablocom.DependencyInjection.DecoratorExtensions.csproj" />
+      <ProjectReference Include="..\..\src\Pablocom.DependencyInjection.DecoratorExtensions\DependencyInjection.DecoratorExtensions.csproj" />
     </ItemGroup>
 
 </Project>
