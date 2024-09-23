@@ -1,4 +1,4 @@
-namespace Pablocom.DependencyInjection.DecoratorExtensions.DecorationStrategies;
+namespace DependencyInjection.DecoratorExtensions.DecorationStrategies;
 
 internal abstract class DecorationStrategy
 {

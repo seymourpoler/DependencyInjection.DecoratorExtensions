@@ -1,6 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Pablocom.DependencyInjection.DecoratorExtensions.DecorationStrategies;
+namespace DependencyInjection.DecoratorExtensions.DecorationStrategies;
 
 internal sealed class OpenGenericTypeDecorationStrategy : DecorationStrategy
 {

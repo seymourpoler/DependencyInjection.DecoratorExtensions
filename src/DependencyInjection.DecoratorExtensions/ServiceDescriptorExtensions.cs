@@ -1,6 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Pablocom.DependencyInjection.DecoratorExtensions;
+namespace DependencyInjection.DecoratorExtensions;
 
 internal static class ServiceDescriptorExtensions
 {

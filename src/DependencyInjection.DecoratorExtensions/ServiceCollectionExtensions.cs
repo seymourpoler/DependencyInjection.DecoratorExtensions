@@ -1,7 +1,7 @@
+using DependencyInjection.DecoratorExtensions.DecorationStrategies;
 using Microsoft.Extensions.DependencyInjection;
-using Pablocom.DependencyInjection.DecoratorExtensions.DecorationStrategies;
 
-namespace Pablocom.DependencyInjection.DecoratorExtensions;
+namespace DependencyInjection.DecoratorExtensions;
 
 public static class ServiceCollectionExtensions
 {
@@ -72,8 +72,7 @@ public static class ServiceCollectionExtensions
             var decoratedTypeProxy = new DecoratedTypeProxy(serviceDescriptor.ServiceType);
             
             services.Add(serviceDescriptor.WithServiceType(decoratedTypeProxy));
-            services[i] = serviceDescriptor.WithImplementationFactory(
-                decorationStrategy.CreateImplementationFactory(decoratedTypeProxy));
+            services[i] = serviceDescriptor.WithImplementationFactory(decorationStrategy.CreateImplementationFactory(decoratedTypeProxy));
 
             hasDecoratedAnyService = true;
         }

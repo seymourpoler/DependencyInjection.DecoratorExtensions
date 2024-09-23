@@ -2,7 +2,7 @@ using System.Globalization;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-namespace Pablocom.DependencyInjection.DecoratorExtensions;
+namespace DependencyInjection.DecoratorExtensions;
 
 internal sealed class DecoratedTypeProxy : Type
 {

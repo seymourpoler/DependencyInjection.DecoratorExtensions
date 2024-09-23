@@ -28,7 +28,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\src\Pablocom.DependencyInjection.DecoratorExtensions\DependencyInjection.DecoratorExtensions.csproj" />
+      <ProjectReference Include="..\..\src\DependencyInjection.DecoratorExtensions\DependencyInjection.DecoratorExtensions.csproj" />
     </ItemGroup>
 
 </Project>

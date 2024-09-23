@@ -1,4 +1,4 @@
-namespace Pablocom.DependencyInjection.DecoratorExtensions;
+namespace DependencyInjection.DecoratorExtensions;
 
 public class DecorationException : InvalidOperationException
 {

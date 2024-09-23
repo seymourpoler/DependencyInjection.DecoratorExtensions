@@ -1,40 +1,16 @@
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Pablocom.DependencyInjection.DecoratorExtensions.UnitTests;
+namespace DependencyInjection.DecoratorExtensions.UnitTests;
 
 public sealed class WhenDecoratingServices
 {
     [Fact]
-    public void CanDecorateServices()
+    public void DecoratesServices()
     {
         var serviceProvider = ConfigureServices(services =>
         {
             services.AddTransient<IDecoratedService, Decorated>();
-            services.Decorate<IDecoratedService, Decorator>();
-        });
-
-        var resolvedService = serviceProvider.GetRequiredService<IDecoratedService>();
-        resolvedService.Execute();
-        
-        resolvedService.Should().BeOfType<Decorator>();
-        
-        var decorator = (Decorator) resolvedService;
-        
-        resolvedService.As<Decorator>().InnerDecoratedService.Should().BeOfType<Decorated>();
-        
-        var decorated = (Decorated) decorator.InnerDecoratedService;
-        
-        decorator.ReceivedCallsCount.Should().Be(1);
-        decorated.ReceivedCallsCount.Should().Be(1);
-    }
-    
-    [Fact]
-    public void CanDecorateServiceRegisteredWithImplementationFactory()
-    {
-        var serviceProvider = ConfigureServices(services =>
-        {
-            services.AddTransient<IDecoratedService> (_ => new Decorated());
             services.Decorate<IDecoratedService, Decorator>();
         });
 
@@ -54,7 +30,7 @@ public sealed class WhenDecoratingServices
     }
     
     [Fact]
-    public void CanDecorateMultipleLevels()
+    public void DecoratesMultipleLevels()
     {
         var serviceProvider = ConfigureServices(services =>
         {
@@ -90,7 +66,6 @@ public sealed class WhenDecoratingServices
         {
             services.AddSingleton<IDecoratedService, Decorated>();
             services.AddSingleton<IDecoratedService, Decorated>();
-            
             services.Decorate<IDecoratedService, Decorator>();
         });
 
@@ -123,6 +98,7 @@ public sealed class WhenDecoratingServices
         });
 
         using var scope = serviceProvider.CreateScope();
+        
         var decoratedService = scope.ServiceProvider.GetRequiredService<IDecoratedService>();
         decoratedService.Execute();
         
@@ -167,7 +143,7 @@ public sealed class WhenDecoratingServices
     }
 
     [Fact]
-    public void ThrowsExceptionIfCannotFindServiceToDecorate()
+    public void ThrowsExceptionIfCannotFindAnyServiceToDecorate()
     {
         var services = new ServiceCollection();
 

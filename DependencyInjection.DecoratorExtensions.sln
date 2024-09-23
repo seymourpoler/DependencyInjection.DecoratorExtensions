@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35312.102
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DependencyInjection.DecoratorExtensions", "src\Pablocom.DependencyInjection.DecoratorExtensions\DependencyInjection.DecoratorExtensions.csproj", "{40285BA5-60AB-4410-B99B-658690FAE8C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DependencyInjection.DecoratorExtensions", "src\DependencyInjection.DecoratorExtensions\DependencyInjection.DecoratorExtensions.csproj", "{40285BA5-60AB-4410-B99B-658690FAE8C1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{8F3D608B-8018-436C-9B6B-9C5D5FF06451}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{3D0045AF-705E-45FE-BFD5-3856E57CF9C4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DependencyInjection.DecoratorExtensions.UnitTests", "tests\Pablocom.DependencyInjection.DecoratorExtensions.UnitTests\DependencyInjection.DecoratorExtensions.UnitTests.csproj", "{5B7EC062-13CB-478D-B194-CF147673EBF1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DependencyInjection.DecoratorExtensions.UnitTests", "tests\DependencyInjection.DecoratorExtensions.UnitTests\DependencyInjection.DecoratorExtensions.UnitTests.csproj", "{5B7EC062-13CB-478D-B194-CF147673EBF1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
