@@ -3,7 +3,7 @@ name: .NET 8 CI
 on:
   push:
     branches:
-      - 1_Add_GitHub_Action_workflow
+      - main
   pull_request:
     branches:
       - main
